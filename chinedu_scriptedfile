@@ -1,6 +1,6 @@
 node {
     def MHD = tool name: "maven3.8.8"
-    agent {label 'dev'}
+    agent {label 'agent1'}
     stage('clone from GitHub'){
         sh 'echo cloning from GitHub'
         git 'https://github.com/ChineduOkeke/maven-web-app.git'
@@ -14,10 +14,9 @@ node {
     }
     stage('store release in nexus'){
         sh 'echo storing release in nexus'
-        sh "${MHD}/bin/mvn deploy"
+        sh 
     }
     stage('Deploying with tomcat'){
         sh 'echo deploying with tomcat'
-        deploy adapters: [tomcat9(credentialsId: 'Tomcat_ID', path: '', url: 'http://3.23.128.200:8080/')], contextPath: null, war: 'target/*war'
     }
 }
